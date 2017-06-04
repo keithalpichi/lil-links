@@ -7,7 +7,7 @@
 
 ## About
 
-Take long links and make them shorter!
+Take long links and make them well... lil!
 
 ## Requirements
 - Node

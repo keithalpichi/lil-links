@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-// import { connect } from 'react-redux'
+import { Route } from 'react-router'
+import Home from './Home'
+import Navigation from './Navigation'
 
 class App extends Component {
   render () {
     return (
       <div>
-        <h2>Lil Links</h2>
+        <Navigation />
+        <Route exact path='/' component={Home} />
+        <Route path="*" render={() => <h2>404: Not Found</h2>} />
       </div>
     )
   }
