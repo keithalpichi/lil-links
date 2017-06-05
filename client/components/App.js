@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { fetchUser } from '../actions/user'
 import { Route, Switch } from 'react-router'
 import Home from './Home'
@@ -17,13 +17,18 @@ class App extends Component {
   }
 
   render () {
+    const { user } = this.props
     return (
       <div>
         <Navigation />
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route path='/login' render={props => <Session url='login' {...props} />} />
-          <Route path='/signup' render={props => <Session url='signup' {...props} />} />
+          <Route path='/login' render={props => {
+            return !user ? <Session url='login' {...props} /> : <Redirect to='/' />
+          }} />
+          <Route path='/signup' render={props => {
+            return !user ? <Session url='signup' {...props} /> : <Redirect to='/' />
+          }} />
           <Route path='*' render={() => <h2>404: Not Found</h2>} />
         </Switch>
       </div>

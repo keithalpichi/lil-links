@@ -16,9 +16,12 @@ export const signUp = (params) => {
       data: params
     })
     .then(res => {
-      console.log(res)
-      window.localStorage.setItem('lil-link-jwt', res.data.token)
-      dispatch({ type: SIGN_UP_SUCCESS, data: res.data })
+      if (res.data.token) {
+        window.localStorage.setItem('lil-link-jwt', res.data.token)
+        dispatch({ type: SIGN_UP_SUCCESS, data: res.data })
+      } else {
+        throw new Error('No valid token')
+      }
     })
     .catch(err => {
       dispatch({ type: SIGN_UP_FAILURE, data: err })
@@ -35,8 +38,12 @@ export const signIn = (params) => {
       data: params
     })
     .then(res => {
-      window.localStorage.setItem('lil-link-jwt', res.data.token)
-      dispatch({ type: SIGN_IN_SUCCESS, data: res.data })
+      if (res.data.token) {
+        window.localStorage.setItem('lil-link-jwt', res.data.token)
+        dispatch({ type: SIGN_IN_SUCCESS, data: res.data })
+      } else {
+        throw new Error('No valid token')
+      }
     })
     .catch(err => {
       dispatch({ type: SIGN_IN_FAILURE, data: err })

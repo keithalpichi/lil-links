@@ -23,21 +23,32 @@ router.get('/', verifyAuth, (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  let id
   let user
   const { session } = req.query
   if (session === 'login') {
     User.findOne({ email: req.body.email }).exec()
-    .then(user => {
-      if (!user) {
+    .then(result => {
+      if (!result) {
         throw new Error('Account does not exist')
       } else {
-        id = user.id
-        return User.comparePassword(req.body.password, user.password)
+        user = result
+        return User.comparePassword(req.body.password, result.password)
       }
     })
-    .then(match => sign(id, SECRET))
-    .then(token => !token ? res.sendStatus(400) : res.json(token))
+    .then(match => sign(user.id, SECRET))
+    .then(token => {
+      if (!token) {
+        throw new Error('Error signing id to token')
+      } else {
+        let userObj = {
+          token: token,
+          id: user.id,
+          username: user.username,
+          email: user.email
+        }
+        return res.json(userObj)
+      }
+    })
     .catch(err => res.status(400).json(err))
   } else if (session === 'signup') {
     User.findOne({ email: req.body.email }).exec()
