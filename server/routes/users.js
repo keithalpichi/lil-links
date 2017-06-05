@@ -28,16 +28,16 @@ router.post('/', (req, res) => {
   const { session } = req.query
   if (session === 'login') {
     User.findOne({ email: req.body.email }).exec()
-    .then((err, user) => {
-      if (err) {
-        throw new Error(err)
+    .then(user => {
+      if (!user) {
+        throw new Error('Account does not exist')
       } else {
         id = user.id
         return User.comparePassword(req.body.password, user.password)
       }
     })
     .then(match => sign(id, SECRET))
-    .then((err, token) => err ? res.sendStatus(400) : res.json(token))
+    .then(token => !token ? res.sendStatus(400) : res.json(token))
     .catch(err => res.status(400).json(err))
   } else if (session === 'signup') {
     User.findOne({ email: req.body.email }).exec()

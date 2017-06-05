@@ -5,6 +5,7 @@ export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS'
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
 export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE'
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE'
+export const SIGN_OUT_REQUEST = 'SIGN_OUT_REQUEST'
 
 export const signUp = (params) => {
   return dispatch => {
@@ -40,5 +41,12 @@ export const signIn = (params) => {
     .catch(err => {
       dispatch({ type: SIGN_IN_FAILURE, data: err })
     })
+  }
+}
+
+export const signOut = () => {
+  return dispatch => {
+    window.localStorage.removeItem('lil-link-jwt')
+    dispatch({ type: SIGN_OUT_REQUEST })
   }
 }

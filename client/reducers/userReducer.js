@@ -1,6 +1,7 @@
 import {
   SIGN_UP_SUCCESS, SIGN_IN_SUCCESS,
-  SIGN_IN_FAILURE, SIGN_UP_FAILURE
+  SIGN_IN_FAILURE, SIGN_UP_FAILURE,
+  SIGN_OUT_REQUEST
 } from '../actions/session'
 import {
   USER_REQUEST_SUCCESS, USER_REQUEST_FAILURE
@@ -21,7 +22,8 @@ export default (state = initialState, action) => {
     case USER_REQUEST_FAILURE:
     case SIGN_UP_FAILURE:
     case SIGN_IN_FAILURE:
+    case SIGN_OUT_REQUEST:
     default:
-      return state
+      return initialState
   }
 }
