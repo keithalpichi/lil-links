@@ -10,14 +10,13 @@ apiRouter.use('/links', verifyAuth, linkRouter)
 
 const shortLinkRouter = (req, res) => {
   let path = url.parse(req.url).pathname.split('/')[1]
-  console.log('path ', path)
   Link.findOne({ shortLink: path }).exec()
   .then(link => {
-    console.log('link ', link)
     if (!link) {
       throw new Error(`Link with short path '${path}' does not exist`)
     } else {
       res.redirect(link.url)
+      Link.updateOne({ shortLink: path }, { $inc: { visits: 1 } }).exec()
     }
   })
   .catch(() => {

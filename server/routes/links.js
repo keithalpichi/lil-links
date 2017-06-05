@@ -24,7 +24,8 @@ router.post('/', (req, res) => {
       let linkObj = {
         url: link.url,
         shortLink: link.shortLink,
-        visits: link.visits
+        visits: link.visits,
+        createdAt: link.createdAt
       }
       return res.status(201).json(linkObj)
     }
