@@ -5,11 +5,10 @@ mongoose.Promise = bluebird
 const cipher = bluebird.promisify(bcrypt.hash)
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: 'Username is required', unique: true, index: true },
+  username: { type: String, required: 'Username is required', unique: true },
   email: {
     type: String,
     required: 'Email is required',
-    index: true,
     validate: {
       validator: function (email) {
         return /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
@@ -33,10 +32,12 @@ userSchema.pre('save', function (next) {
 
 const User = mongoose.model('User', userSchema)
 
-User.comparePassword = function (candidatePassword, savedPassword, cb) {
-  bcrypt.compare(candidatePassword, savedPassword, (err, isMatch) => {
-    if (err) { return cb(err) }
-    cb(null, isMatch)
+User.comparePassword = function (candidatePassword, savedPassword) {
+  return new Promise(function (resolve, reject) {
+    bcrypt.compare(candidatePassword, savedPassword, function (err, isMatch) {
+      if (err) { return reject(err) }
+      return resolve(isMatch)
+    })
   })
 }
 

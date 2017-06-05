@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 8080
 const HOST = process.env.HOST || 'localhost'
 const ENV = process.env.NODE_ENV || 'development'
 
-app.use(bodyParser.urlencoded({ extended: true }))
+// app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, '../public/')))
 

@@ -14,29 +14,38 @@ const getJWTFromHeaders = req => {
   })
 }
 
-const sendUnauthorized = res => res.status(401).json('Unauthorized')
+// const sendUnauthorized = res => res.status(401).json('Unauthorized')
 const verifyUserFromJWT = id => User.findOne({ id: id })
 
 const verifyAuth = (req, res, next) => {
-  let token
+  let id
 
   getJWTFromHeaders(req)
-  .then(jwt => !jwt ? sendUnauthorized(res) : verify(jwt, SECRET))
-  .then((err, decoded) => {
-    if (err) {
-      return sendUnauthorized(res)
+  .then(jwt => {
+    if (!jwt) {
+      throw new Error()
     } else {
-      token = decoded
+      return verify(jwt, SECRET)
+    }
+  })
+  .then(decoded => {
+    if (!decoded) {
+      throw new Error()
+    } else {
+      id = decoded
       return verifyUserFromJWT(decoded)
     }
   })
   .then((err, user) => {
     if (err) {
-      return sendUnauthorized(res)
+      throw new Error()
     } else {
-      req.token = token
+      req.user_id = id
       next()
     }
+  })
+  .catch(err => {
+    res.sendStatus(401)
   })
 }
 
