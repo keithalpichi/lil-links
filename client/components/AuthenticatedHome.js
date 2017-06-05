@@ -1,13 +1,35 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import LinkForm from './LinkForm'
+import { fetchLinks } from '../actions/link'
 
 class AuthenticatedHome extends Component {
+  componentWillMount () {
+    if (this.props.links && this.props.links.length === 0) {
+      this.props.fetchLinks()
+    }
+  }
+
   render () {
     return (
       <div>
         <h1>Home page- User is authenticated</h1>
+        <LinkForm />
       </div>
     )
   }
 }
 
-export default AuthenticatedHome
+const mapStateToProps = state => {
+  return {
+    links: state.links
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchLinks: () => dispatch(fetchLinks())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthenticatedHome)

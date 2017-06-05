@@ -24,6 +24,6 @@ export default (state = initialState, action) => {
     case SIGN_IN_FAILURE:
     case SIGN_OUT_REQUEST:
     default:
-      return initialState
+      return state
   }
 }

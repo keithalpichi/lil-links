@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { getJWTFromStorage } from '../utils'
 import { connect } from 'react-redux'
 import { withRouter, Redirect } from 'react-router-dom'
 import { fetchUser } from '../actions/user'
@@ -10,7 +11,7 @@ import Session from './Session'
 class App extends Component {
   componentWillMount () {
     const { user } = this.props
-    const token = window.localStorage.getItem('lil-link-jwt')
+    const token = getJWTFromStorage()
     if (!user && token) {
       this.props.fetchUser(token)
     }

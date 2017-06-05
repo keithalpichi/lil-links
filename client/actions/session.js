@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { setJWTInStorage, removeJWTFromStorage } from '../utils'
 export const SIGN_IN_REQUEST = 'SIGN_IN_REQUEST'
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST'
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS'
@@ -17,7 +18,7 @@ export const signUp = (params) => {
     })
     .then(res => {
       if (res.data.token) {
-        window.localStorage.setItem('lil-link-jwt', res.data.token)
+        setJWTInStorage(res.data.token)
         dispatch({ type: SIGN_UP_SUCCESS, data: res.data })
       } else {
         throw new Error('No valid token')
@@ -39,7 +40,7 @@ export const signIn = (params) => {
     })
     .then(res => {
       if (res.data.token) {
-        window.localStorage.setItem('lil-link-jwt', res.data.token)
+        setJWTInStorage(res.data.token)
         dispatch({ type: SIGN_IN_SUCCESS, data: res.data })
       } else {
         throw new Error('No valid token')
@@ -53,7 +54,7 @@ export const signIn = (params) => {
 
 export const signOut = () => {
   return dispatch => {
-    window.localStorage.removeItem('lil-link-jwt')
+    removeJWTFromStorage()
     dispatch({ type: SIGN_OUT_REQUEST })
   }
 }
