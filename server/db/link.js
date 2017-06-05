@@ -4,7 +4,7 @@ const bluebird = require('bluebird')
 mongoose.Promise = bluebird
 
 const linkSchema = new mongoose.Schema({
-  ownerId: { type: Number, required: true, unique: true },
+  ownerId: { type: Number, required: true },
   url: { type: String, required: 'Url is required', unique: true },
   shortLink: { type: String, unique: true },
   createdAt: { type: Date, required: true, default: Date.now },
