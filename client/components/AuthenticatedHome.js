@@ -14,7 +14,7 @@ class AuthenticatedHome extends Component {
   render () {
     return (
       <div>
-        <h1>Home page- User is authenticated</h1>
+        <h1>Hey {this.props.username}, check out your links or create new ones!</h1>
         <LinkForm />
         <LinksList links={this.props.links} />
       </div>

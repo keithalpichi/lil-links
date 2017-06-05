@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 class Home extends Component {
   render () {
     const { user } = this.props
-    return user ? <AuthenticatedHome /> : <UnauthenticatedHome />
+    return user ? <AuthenticatedHome {...user} /> : <UnauthenticatedHome />
   }
 }
 
