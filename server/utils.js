@@ -24,10 +24,10 @@ const verifyAuth = (req, res, next) => {
   .then(jwt => !jwt ? sendUnauthorized(res) : verify(jwt, SECRET))
   .then((err, decoded) => {
     if (err) {
-      sendUnauthorized(res)
+      return sendUnauthorized(res)
     } else {
       token = decoded
-      verifyUserFromJWT(decoded)
+      return verifyUserFromJWT(decoded)
     }
   })
   .then((err, user) => {
