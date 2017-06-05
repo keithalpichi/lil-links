@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { signIn, signUp } from '../actions/session'
 
 class Session extends Component {
   constructor (props) {
@@ -20,8 +22,13 @@ class Session extends Component {
   }
 
   handleSubmit (e) {
-    // dispatch action to POST to /users
     e.preventDefault()
+    if (this.props.url === 'login') {
+      this.props.signIn(this.state)
+    } else {
+      this.props.signUp(this.state)
+    }
+    this.props.history.push('/')
   }
 
   renderTransferLinks () {
@@ -63,4 +70,11 @@ class Session extends Component {
   }
 }
 
-export default Session
+const mapDispatchToProps = dispatch => {
+  return {
+    signIn: params => dispatch(signIn(params)),
+    signUp: params => dispatch(signUp(params))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Session)
