@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import LinkForm from './LinkForm'
+import LinksList from './LinksList'
 import { fetchLinks } from '../actions/link'
 
 class AuthenticatedHome extends Component {
@@ -15,6 +16,7 @@ class AuthenticatedHome extends Component {
       <div>
         <h1>Home page- User is authenticated</h1>
         <LinkForm />
+        <LinksList links={this.props.links} />
       </div>
     )
   }

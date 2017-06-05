@@ -18,7 +18,6 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   new Link({ url: req.body.url, ownerId: parseInt(req.user_id) }).save()
   .then(link => {
-    console.log(link);
     if (!link) {
       throw new Error('Error creating link')
     } else {
