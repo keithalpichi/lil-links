@@ -29,4 +29,15 @@ router.post('/', (req, res) => {
   })
 })
 
+router.delete('/', (req, res) => {
+  return Link.deleteLink(req.body.shortlink)
+  .then(() => {
+    return res.sendStatus(200)
+  })
+  .catch(() => {
+    let err = new Error('Error deleting link').message
+    res.status(400).json(err)
+  })
+})
+
 module.exports = router

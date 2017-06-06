@@ -26,3 +26,7 @@ module.exports.postLink = ({ url, ownerId }) => {
     RETURNING *
   `)
 }
+
+module.exports.deleteLink = shortlink => {
+  return db.none(`DELETE FROM links where shortlink = '${shortlink}'`)
+}
