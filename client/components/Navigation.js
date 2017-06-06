@@ -15,8 +15,8 @@ class Navigation extends Component {
     } else {
       return (
         <div>
-          <Link to='/login'>Log In</Link>
-          <Link to='/signup'>Sign Up</Link>
+          <button><Link to='/login'>Log In</Link></button>
+          <button><Link to='/signup'>Sign Up</Link></button>
         </div>
       )
     }
@@ -24,8 +24,8 @@ class Navigation extends Component {
 
   render () {
     return (
-      <div>
-        <h1>Navigation bar here</h1>
+      <div id='navbar'>
+        <h1 id='title'><Link to='/' >Lil' Links</Link></h1>
         {this.renderSessionLinks()}
       </div>
     )
