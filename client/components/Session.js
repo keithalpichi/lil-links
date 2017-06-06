@@ -41,28 +41,27 @@ class Session extends Component {
 
   render () {
     return (
-      <div>
+      <div id='session-container'>
         <h1>{this.props.url === 'login' ? 'Login' : 'Sign up' } to start making Lil' Links</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
+        <form onSubmit={this.handleSubmit} id='session-form'>
+          <label className='form-label'>
             Username
-            <input type='text' name='username' value={this.state.username} onChange={this.handleChange} />
+            <input className='form-input' type='text' name='username' value={this.state.username} onChange={this.handleChange} />
           </label>
 
-          <label>
+          <label className='form-label'>
             Email
-            <input type='email' name='email' value={this.state.email} onChange={this.handleChange} />
+            <input className='form-input' type='email' name='email' value={this.state.email} onChange={this.handleChange} />
           </label>
 
-          <label>
+          <label className='form-label'>
             Password
-            <input type='password' name='password' value={this.state.password} onChange={this.handleChange} />
+            <input className='form-input' type='password' name='password' value={this.state.password} onChange={this.handleChange} />
           </label>
 
-          <label>
-            Submit
-            <input type='submit' value='Submit' />
-          </label>
+          <div className='button-container'>
+            <input className='form-submit' type='submit' value='Submit' />
+          </div>
         </form>
         {this.renderTransferLinks()}
       </div>
