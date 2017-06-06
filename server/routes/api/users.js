@@ -45,7 +45,6 @@ const signUp = (req, res) => {
   })
   .then(() => User.postUser(req.body))
   .then(result => {
-    console.log('result from postUser ', result)
     if (!result) {
       throw new Error('Failed saving user')
     } else {
@@ -54,7 +53,6 @@ const signUp = (req, res) => {
     }
   })
   .then(token => {
-    console.log('token from sign ', token)
     if (!token) {
       throw new Error('Server failed to create session token')
     } else {
@@ -68,7 +66,6 @@ const signUp = (req, res) => {
     }
   })
   .catch(err => {
-    console.log('error in catch ', err)
     res.status(400).json(err)
   })
 }
@@ -84,7 +81,7 @@ const logIn = (req, res) => {
       return User.comparePassword(req.body.password, result.password)
     }
   })
-  .then(match => sign(user.id, SECRET))
+  .then(match => sign(user.id.toString(), SECRET))
   .then(token => {
     if (!token) {
       throw new Error('Error signing id to token')
@@ -98,7 +95,10 @@ const logIn = (req, res) => {
       return res.json(userObj)
     }
   })
-  .catch(err => res.status(400).json(err))
+  .catch(err => {
+    console.log('Error logging user in: ', err)
+    res.status(400).json(err)
+  })
 }
 
 module.exports = router

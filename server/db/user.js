@@ -26,7 +26,8 @@ module.exports.comparePassword = (givenPassword, savedPassword) => {
   return new Promise((resolve, reject) => {
     return compare(givenPassword, savedPassword)
     .then((err, isMatch) => {
-      if (err) { return reject(err) }
+      const error = new Error('Password is invalid')
+      if (err) { return reject(error) }
       return resolve(isMatch)
     })
   })
