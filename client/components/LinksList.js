@@ -6,7 +6,7 @@ const URL = process.env.URL || 'http://localhost:8080/'
 
 class LinksList extends Component {
   renderDeleteCell (shortlink) {
-    return <button onClick={() => this.props.deleteLink(shortlink)}>Delete</button>
+    return <button className='small' onClick={() => this.props.deleteLink(shortlink)}>Delete</button>
   }
 
   renderShortLinkCell (shortlink) {

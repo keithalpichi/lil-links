@@ -28,16 +28,12 @@ class LinkForm extends Component {
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Create link
-          <input type='text' name='link' value={this.state.url} onChange={this.handleChange} />
-        </label>
-
-        <label>
-          Submit
-          <input type='submit' value='Submit' />
-        </label>
+      <form id='link-form' onSubmit={this.handleSubmit}>
+        <input id='link-form-input' type='text' name='link'
+          value={this.state.url} onChange={this.handleChange}
+          placeholder={'To make a lil\' link place it here!'}
+        />
+        <input id='link-form-submit' type='submit' value='Submit' />
       </form>
     )
   }

@@ -6,7 +6,8 @@ import { fetchLinks } from '../actions/link'
 
 class AuthenticatedHome extends Component {
   componentWillMount () {
-    if (this.props.links && this.props.links.length === 0) {
+    const { links, user } = this.props
+    if (user && links.length === 0) {
       this.props.fetchLinks()
     }
   }
@@ -14,7 +15,7 @@ class AuthenticatedHome extends Component {
   render () {
     return (
       <div>
-        <h1>Hey {this.props.username}, check out your links or create new ones!</h1>
+        <h1 className='center'>Hey {this.props.user.username}, check out your links or create new ones!</h1>
         <LinkForm />
         <LinksList links={this.props.links} />
       </div>
@@ -24,7 +25,8 @@ class AuthenticatedHome extends Component {
 
 const mapStateToProps = state => {
   return {
-    links: state.links
+    links: state.links,
+    user: state.user
   }
 }
 

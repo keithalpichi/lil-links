@@ -18,12 +18,13 @@ class App extends Component {
   }
 
   render () {
-    const { user } = this.props
+    const { user, fetchingUser } = this.props
+    if (fetchingUser) { return null }
     return (
       <div>
         <Navigation />
         <Switch>
-          <Route exact path='/' component={Home} />
+          <Route exact path='/' render={() => <Home user={user} />} />
           <Route path='/login' render={props => {
             return !user ? <Session url='login' {...props} /> : <Redirect to='/' />
           }} />
@@ -39,7 +40,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    fetchingUser: state.fetching.user
   }
 }
 

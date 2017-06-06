@@ -19,10 +19,11 @@ export default (state = initialState, action) => {
         username: action.data.username,
         email: action.data.email
       }
+    case SIGN_OUT_REQUEST:
+      return initialState
     case USER_REQUEST_FAILURE:
     case SIGN_UP_FAILURE:
     case SIGN_IN_FAILURE:
-    case SIGN_OUT_REQUEST:
     default:
       return state
   }
