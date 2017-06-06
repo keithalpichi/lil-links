@@ -10,7 +10,7 @@
     "dev-client": "NODE_ENV=development webpack -d --watch",
     "dev-server": "NODE_ENV=development nodemon server/index.js",
     "test": "NODE_ENV=test jest --runInBand --forceExit",
-    "heroku-postbuild": "NODE_ENV=production webpack"
+    "build": "NODE_ENV=production webpack"
   },
   "jest": {
     "verbose": true,
