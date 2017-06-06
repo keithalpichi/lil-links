@@ -2,18 +2,22 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ReactTable from 'react-table'
 import { deleteLink } from '../actions/link'
+const URL = process.env.URL || 'http://localhost:8080/'
 
 class LinksList extends Component {
   renderDeleteCell (shortlink) {
-    return (
-      <button onClick={() => this.props.deleteLink(shortlink)}>Delete</button>
-    )
+    return <button onClick={() => this.props.deleteLink(shortlink)}>Delete</button>
+  }
+
+  renderShortLinkCell (shortlink) {
+    return <a href={`${URL}${shortlink}`}>{`${URL}${shortlink}`}</a>
   }
 
   render () {
     const columns = [{
       Header: 'Lil\' Link',
       accessor: 'shortlink',
+      Cell: d => this.renderShortLinkCell(d.value),
       filterMethod: (filter, row) => row[filter.id].includes(filter.value)
     }, {
       Header: 'Original URL',
@@ -22,7 +26,7 @@ class LinksList extends Component {
     }, {
       Header: 'Created',
       accessor: 'createdat',
-      Cell: d => <span>{new Date(d.value).toDateString()}</span>,
+      Cell: d => <a>{new Date(d.value).toDateString()}</a>,
       filterable: false
     }, {
       Header: 'Visits',
