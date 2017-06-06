@@ -15,5 +15,8 @@ export const fetchUser = token => {
     .then(res => {
       dispatch({ type: USER_REQUEST_SUCCESS, data: res.data })
     })
+    .catch(err => {
+      dispatch({ type: USER_REQUEST_FAILURE, data: err })
+    })
   }
 }

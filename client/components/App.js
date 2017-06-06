@@ -30,7 +30,7 @@ class App extends Component {
           <Route path='/signup' render={props => {
             return !user ? <Session url='signup' {...props} /> : <Redirect to='/' />
           }} />
-          {/* <Route path='*' render={() => <h2>404: Not Found</h2>} /> */}
+          <Route path='*' render={() => <h2>404: Not Found</h2>} />
         </Switch>
       </div>
     )

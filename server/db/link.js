@@ -1,23 +1,28 @@
 const crypto = require('crypto')
-const mongoose = require('mongoose')
-const bluebird = require('bluebird')
-mongoose.Promise = bluebird
+const db = require('./index')
 
-const linkSchema = new mongoose.Schema({
-  ownerId: { type: Number, required: true },
-  url: { type: String, required: 'Url is required', unique: true },
-  shortLink: { type: String, unique: true },
-  createdAt: { type: Date, required: true, default: Date.now },
-  visits: { type: Number, default: 0 }
-})
+module.exports.selectLinks = ({ ownerId }) => {
+  return db.manyOrNone(`
+    SELECT * FROM links WHERE ownerid = ${ownerId}
+    ORDER BY createdat DESC
+  `)
+}
 
-linkSchema.pre('save', function (next) {
+module.exports.selectByShortLink = ({ shortLink }) => {
+  return db.oneOrNone(`SELECT * FROM links WHERE shortlink = '${shortLink}'`)
+}
+
+module.exports.incrementVisit = ({ shortLink }) => {
+  return db.none(`UPDATE links SET visits = visits + 1 WHERE shortlink = '${shortLink}'`)
+}
+
+module.exports.postLink = ({ url, ownerId }) => {
   let shasum = crypto.createHash('sha1')
-  shasum.update(this.url)
-  this.shortLink = shasum.digest('hex').slice(0, 7)
-  next()
-})
-
-const Link = mongoose.model('Link', linkSchema)
-
-module.exports = Link
+  shasum.update(url)
+  const shortLink = shasum.digest('hex').slice(0, 7)
+  return db.one(`
+    INSERT INTO links (url, shortlink, ownerid)
+    VALUES ('${url}', '${shortLink}', ${ownerId})
+    RETURNING *
+  `)
+}

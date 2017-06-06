@@ -1,44 +1,33 @@
+const db = require('./index')
 const bcrypt = require('bcrypt-nodejs')
-const mongoose = require('mongoose')
-const bluebird = require('bluebird')
-mongoose.Promise = bluebird
-const cipher = bluebird.promisify(bcrypt.hash)
+const util = require('bluebird')
+const cipher = util.promisify(bcrypt.hash)
+const compare = util.promisify(bcrypt.compare)
 
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: 'Username is required', unique: true },
-  email: {
-    type: String,
-    required: 'Email is required',
-    validate: {
-      validator: function (email) {
-        return /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
-      },
-      message: 'Email \'{VALUE}\' is not a valid email'
-    }
-  },
-  password: { type: String, required: 'Password is required', minlength: [7, 'Password \'{VALUE}\' must be 7 characters in length minimum'] },
-  admin: { type: Boolean, required: true, default: false },
-  private: { type: Boolean, required: true, default: false },
-  createdAt: { type: Date, required: true, default: Date.now }
-})
+module.exports.selectUser = ({ id }) => db.oneOrNone(`SELECT * from users WHERE id = ${id}`)
 
-userSchema.pre('save', function (next) {
-  return cipher(this.password, null, null)
-  .then(hash => {
-    this.password = hash
-    next()
+module.exports.selectUserByEmail = ({ email }) => db.oneOrNone(`SELECT * FROM users WHERE email = '${email}'`)
+
+module.exports.postUser = ({ username, email, password }) => {
+  console.log('creating a new user with params ', username, email, password)
+  return cipher(password, null, null)
+  .then(hashedPassword => {
+    return db.oneOrNone(`
+      INSERT INTO users (username, email, password)
+      VALUES ('${username}', '${email}', '${hashedPassword}')
+      ON CONFLICT
+      DO NOTHING
+      RETURNING *
+    `)
   })
-})
+}
 
-const User = mongoose.model('User', userSchema)
-
-User.comparePassword = function (candidatePassword, savedPassword) {
-  return new Promise(function (resolve, reject) {
-    bcrypt.compare(candidatePassword, savedPassword, function (err, isMatch) {
+module.exports.comparePassword = (givenPassword, savedPassword) => {
+  return new Promise((resolve, reject) => {
+    return compare(givenPassword, savedPassword)
+    .then((err, isMatch) => {
       if (err) { return reject(err) }
       return resolve(isMatch)
     })
   })
 }
-
-module.exports = User

@@ -1,0 +1,21 @@
+DROP DATABASE IF EXISTS lil_link_development;
+CREATE DATABASE lil_link_development;
+
+\c lil_link_development;
+
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  createdat TIMESTAMP DEFAULT now() NOT NULL,
+  username VARCHAR (50) NOT NULL UNIQUE,
+  email VARCHAR (50) NOT NULL UNIQUE,
+  password VARCHAR (100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS links (
+  id SERIAL PRIMARY KEY,
+  createdat TIMESTAMP DEFAULT now() NOT NULL,
+  url VARCHAR (128) NOT NULL,
+  shortlink VARCHAR (12) NOT NULL UNIQUE,
+  ownerid INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
+  visits INTEGER DEFAULT 0
+);

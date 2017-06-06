@@ -1,9 +1,7 @@
-const mongoose = require('mongoose')
-mongoose.Promise = require('bluebird')
+const promise = require('bluebird')
+const options = { promiseLib: promise }
 const env = process.env.NODE_ENV || 'development'
-const dbUrl = process.env.DB_URL || `mongodb://localhost/lillink-${env}`
+const dbUrl = process.env.DB_URL || `postgres://root:@localhost:5432/lil_link_${env}`
+const pgp = require('pg-promise')(options)
 
-mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
-mongoose.connection.once('open', console.log.bind(console, `Connected to MongoDB url: ${dbUrl}`))
-
-module.exports = mongoose
+module.exports = pgp(dbUrl)

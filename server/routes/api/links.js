@@ -1,8 +1,8 @@
 const router = require('express').Router()
-const Link = require('../db/link')
+const Link = require('../../db/link')
 
 router.get('/', (req, res) => {
-  Link.find({ ownerId: parseInt(req.user_id) }).exec()
+  Link.selectLinks({ ownerId: req.user_id })
   .then(links => {
     if (!links) {
       throw new Error('Error fetching links')
@@ -16,22 +16,15 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  new Link({ url: req.body.url, ownerId: parseInt(req.user_id) }).save()
+  return Link.postLink({ url: req.body.url, ownerId: parseInt(req.user_id) })
   .then(link => {
     if (!link) {
       throw new Error('Error creating link')
     } else {
-      let linkObj = {
-        url: link.url,
-        shortLink: link.shortLink,
-        visits: link.visits,
-        createdAt: link.createdAt
-      }
-      return res.status(201).json(linkObj)
+      return res.status(201).json(link)
     }
   })
   .catch(err => {
-    console.log(err)
     res.status(400).json(err)
   })
 })
