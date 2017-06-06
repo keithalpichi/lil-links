@@ -1,7 +1,7 @@
 const User = require('./db/user')
 const jwtLib = require('jsonwebtoken')
 const SECRET = process.env.SECRET || 'secret'
-const util = require('util')
+const util = require('bluebird')
 const verify = util.promisify(jwtLib.verify)
 
 const getJWTFromHeaders = req => {

@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const verifyAuth = require('../../utils').verifyAuth
 const User = require('../../db/user')
-const util = require('util')
+const util = require('bluebird')
 const jwt = require('jsonwebtoken')
 const sign = util.promisify(jwt.sign)
 const SECRET = process.env.SECRET || 'secret'
