@@ -3,20 +3,7 @@ import { connect } from 'react-redux'
 import ReactTable from 'react-table'
 import { deleteLink } from '../actions/link'
 
-// const dateSearch = (filter, date) => {
-//   // (filter, row) => row[filter.id].includes(filter.value)
-// }
-
 class LinksList extends Component {
-  // constructor (props) {
-  //   super(props)
-  //   this.delete = this.delete.bind(this)
-  // }
-  //
-  // delete (e) {
-  //   this.props.deleteLink(e.target.value)
-  // }
-
   renderDeleteCell (shortlink) {
     return (
       <button onClick={() => this.props.deleteLink(shortlink)}>Delete</button>
@@ -37,7 +24,6 @@ class LinksList extends Component {
       accessor: 'createdat',
       Cell: d => <span>{new Date(d.value).toDateString()}</span>,
       filterable: false
-      // filterMethod: dateSearch()
     }, {
       Header: 'Visits',
       accessor: 'visits',
