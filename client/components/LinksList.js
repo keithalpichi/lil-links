@@ -10,7 +10,7 @@ class LinksList extends Component {
   }
 
   renderShortLinkCell (shortlink) {
-    return <a href={`${URL}${shortlink}`}>{`${URL}${shortlink}`}</a>
+    return <a href={shortlink}>{`${URL}${shortlink}`}</a>
   }
 
   render () {
