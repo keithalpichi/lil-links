@@ -13,7 +13,11 @@ html, body {
   justify-content: flex-end;
   flex-direction: row;
   align-items: center;
-  padding: 0 24px;
+  padding: 0 0 0 24px;
+}
+
+.navlink {
+  display: inline;
 }
 
 .center {
@@ -30,6 +34,8 @@ html, body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  text-align: center;
+  margin-bottom: 25px;
 }
 
 #main-img {
@@ -160,4 +166,18 @@ button:hover, input[type='submit']:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 400px) {
+  .navlink {
+    display: none;
+  }
+
+  #title {
+    font-size: 30px;
+  }
+
+  .large {
+    font-size: 40px;
+  }
 }
