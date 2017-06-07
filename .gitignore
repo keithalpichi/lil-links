@@ -5,6 +5,7 @@ node_modules
 .env
 
 # Compiled directories
+public/build/
 
 # Logs
 coverage
