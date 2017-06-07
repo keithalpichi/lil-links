@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ReactTable from 'react-table'
 import { deleteLink } from '../actions/link'
-const URL = process.env.DOMAIN_NAME || 'http://localhost:8080/'
+const URL = process.env.NODE_ENV === 'production' ? 'lill.ink/' : 'http://localhost:8080/'
 
 class LinksList extends Component {
   renderDeleteCell (shortlink) {
