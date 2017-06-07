@@ -2,7 +2,6 @@ const db = require('./index')
 const bcrypt = require('bcrypt-nodejs')
 const util = require('bluebird')
 const cipher = util.promisify(bcrypt.hash)
-const compare = util.promisify(bcrypt.compare)
 
 module.exports.selectUser = ({ id }) => db.oneOrNone(`SELECT * from users WHERE id = ${id}`)
 
@@ -23,10 +22,11 @@ module.exports.postUser = ({ username, email, password }) => {
 
 module.exports.comparePassword = (givenPassword, savedPassword) => {
   return new Promise((resolve, reject) => {
-    return compare(givenPassword, savedPassword)
-    .then((err, isMatch) => {
-      const error = new Error('Password is invalid')
-      if (err) { return reject(error) }
+    return bcrypt.compare(givenPassword, savedPassword, (err, isMatch) => {
+      if (err) {
+        const error = new Error('Password is invalid')
+        return reject(error)
+      }
       return resolve(isMatch)
     })
   })
