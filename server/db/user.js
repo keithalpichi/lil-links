@@ -9,7 +9,6 @@ module.exports.selectUser = ({ id }) => db.oneOrNone(`SELECT * from users WHERE 
 module.exports.selectUserByEmail = ({ email }) => db.oneOrNone(`SELECT * FROM users WHERE email = '${email}'`)
 
 module.exports.postUser = ({ username, email, password }) => {
-  console.log('creating a new user with params ', username, email, password)
   return cipher(password, null, null)
   .then(hashedPassword => {
     return db.oneOrNone(`
