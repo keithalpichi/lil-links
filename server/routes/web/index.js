@@ -17,6 +17,6 @@ module.exports = (req, res) => {
   })
   .catch((err) => {
     console.log(err.message)
-    res.send('<h2>404: Not Found</h2>')
+    res.redirect(302, '/')
   })
 }
