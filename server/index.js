@@ -19,3 +19,5 @@ if (!module.parent) {
     console.log(`Listening at: ${HOST}:${PORT} in ${ENV} environment`)
   })
 }
+
+module.exports = app
