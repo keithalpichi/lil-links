@@ -1,4 +1,4 @@
-\c ebdb;
+\c d1s44bpjcbetv3;
 
 CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
