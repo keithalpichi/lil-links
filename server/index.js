@@ -4,7 +4,7 @@ const path = require('path')
 const app = express()
 const { apiRouter, shortLinkRouter } = require('./routes')
 const PORT = process.env.PORT || 8080
-const HOST = process.env.HOST || 'localhost'
+const HOST = process.env.HOST || '127.0.0.1'
 const ENV = process.env.NODE_ENV || 'development'
 
 app.use(bodyParser.json())
