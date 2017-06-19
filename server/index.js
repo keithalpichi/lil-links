@@ -15,7 +15,7 @@ app.get('/:shortLink', shortLinkRouter)
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../public/index.html')))
 
 if (!module.parent) {
-  app.listen(PORT, HOST, () => {
+  app.listen(PORT, () => {
     console.log(`Listening at: ${HOST}:${PORT} in ${ENV} environment`)
   })
 }
